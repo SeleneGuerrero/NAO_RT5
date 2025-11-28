@@ -2,10 +2,10 @@ spring:
   application:
     name: Online Store API
   datasource:
-    url: jdbc:postgresql://localhost:5432/online_store_dev
-    username: postgres
-    password: 130896
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/online_store_dev
+    username: user
+    password: user_pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
