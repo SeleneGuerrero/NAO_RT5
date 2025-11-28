@@ -1,9 +1,14 @@
 spring:
+  application:
+    name: Online Store API
   datasource:
-    url: jdbc:mysql://localhost:3306/online_store_dev
-    username: user
-    password: user_pass
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/online_store_dev
+    username: postgres
+    password: 130896
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
 
   jpa:
     hibernate:
@@ -12,10 +17,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 springdoc:
   api-docs:
-    path: /api-docs
+    path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
     enabled: true
