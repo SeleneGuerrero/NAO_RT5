@@ -1,87 +1,104 @@
 # Order Management System
 
-This project it is created using **Sprinboot** , **Swagger** for API documentation and **Postgres** designed to help to
-manage orders from the users.
----
+**REST API for managing customers, products, and orders in an online store. Built with Spring Boot, Spring Data JPA, and MySQL.**
+
+
+
+## Technologies & Dependencies
+**Core Framework**
+
+- spring-boot-starter — Base Spring Boot features
+- spring-boot-starter-web — REST controllers
+- spring-boot-starter-data-jpa — Persistence layer with JPA/Hibernate
+
+**Database**
+
+- mysql-connector-j — Driver for connecting to MySQL
+
+**Validation**
+
+- jakarta.validation-api — Annotations such as @NotNull, @Email, etc.
+
+**Utilities**
+
+lombok — Reduces boilerplate (getters, setters, constructors)
+
+**Testing**
+
+- spring-boot-starter-test — JUnit, Mockito, etc.
+- junit:junit — Additional JUnit support
+
+
 ## Project Structure
-
 ```
-order-management/
-├── src/
-│   ├── main/
-│   │   ├── java/com/digitalNAO/ordermanagement/orderapp
-│   │   │   ├── OrderappApplicacion.java
-│   │   │   ├── config/
-│   │   │   │   └── SwaggerConfig.java
-│   │   │   ├── entity/
-│   │   │   │   ├── Customer.java
-│   │   │   │   ├── Product.java
-│   │   │   │   ├── Order.java
-│   │   │   │   └── OrderItem.java
-│   │   │   ├── repository/
-│   │   │   │   ├── CustomerRepository.java
-│   │   │   │   ├── ProductRepository.java
-│   │   │   │   ├── OrderRepository.java
-│   │   │   │   └── OrderItemRepository.java
-│   │   │   ├── service/
-│   │   │   │   ├── CustomerService.java
-│   │   │   │   ├── ProductService.java
-│   │   │   │   └── OrderService.java
-│   │   │   ├── dto/
-│   │   │   │   ├── OrderCreateDTO.java
-│   │   │   │   ├── OrderResponseDTO.java
-│   │   │   │   └── OrderItemDTO.java
-│   │   │   └── controller/
-│   │   │       ├── CustomerController.java
-│   │   │       ├── ProductController.java
-│   │   │       └── OrderController.java
-│   └── test/
-├── pom.xml
-└──  README.md
+src/main/java
+└── com.ordermanagement.orderapp
+    ├── controller          → REST controllers (Customer, Product, Order)
+    ├── dto                 → DTOs for requests/responses
+    ├── entity              → JPA entities (Customer, Product, Order, OrderItem)
+    ├── repository          → Spring Data repositories
+    ├── service             → Business logic layer
+    └── OrderappApplication → Main entry point
 ```
-## Features
-- API documentation in Swagger
-- Postgres with development and production database
-- Test
 
-## Instalation
-### Prerequisites
-- **Java SDK 17+**
-- **Postgres 42.7.7**
----
-## CRUD Endpoints
 
-| Method     | Endpoint         | Description     |
-|------------|------------------|-----------------|
-| **GET**    | `/api/users/`    | Get all users   |
-| **GET**    | `/api/users/:id` | Get users       |
-| **POST**   | `/api/users`     | Create new User |
-| **PUT**    | `/api/users/:id` | Update user     |
-| **DELETE** | `/api/users/:id` | Delete user     |         
-|            |                  |                 |
+**Controllers**
 
----
-## User Stories
-| **ID**   | **User Story**                                                                                                                                              | **Priority** | **Acceptance Criteria**                                                                                                                          |
-| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **US01** | As an **administrator**, I want to **configure different environments (dev, test, prod)** so that the system behaves correctly depending on the deployment. | High         | The system must support **Spring profiles** and load configurations dynamically for each environment.                                            |
-| **US02** | As a **developer**, I want to **document all API endpoints using Swagger** so that other teams can understand and test the services easily.                 | High         | Swagger UI must automatically generate documentation for each endpoint and allow visual testing through a browser interface.                     |
-| **US03** | As a **user**, I want to **place and track orders** so that I can verify the current status of my purchases.                                                | High         | The API must allow creating, reading, and updating orders in the PostgreSQL database and return real-time status information.                    |
-| **US04** | As a **system administrator**, I want to **monitor database connections and handle failures** so that service interruptions are minimized.                  | Medium       | The system must include error-handling logic for failed database nodes and provide meaningful error messages or fallback procedures.             |
-| **US05** | As a **project manager**, I want to **validate the integration and documentation of all services** so that the solution is stable and meets business needs. | Medium       | The application must successfully run integration tests using Swagger, Spring Boot, and the configured PostgreSQL database for all environments. |
+- CustomerController — CRUD operations for customers
+- ProductController — CRUD for products
+- OrderController — Order creation and listing
 
-## Requirements and Deliverables
-| **ID**    | **Requirement Description**                                                                                                     | **Type**   | **Associated User Story** |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------ | :--------- | :------------------------ |
-| **REQ01** | Configure **Spring profiles** (`application-dev.yml`, `application-prod.yml`, etc.) for environment-based database connections. | Functional | US01, US04                |
-| **REQ02** | Integrate **Swagger/OpenAPI** to automatically generate REST API documentation.                                                 | Functional | US02, US05                |
-| **REQ03** | Implement **CRUD operations for orders** with PostgreSQL as the database.                                                       | Functional | US03                      |
-| **REQ04** | Implement **error handling and logging** for failed database nodes or connection issues.                                        | Functional | US04                      |
-| **REQ05** | Run **integration tests** to validate environment configuration, API documentation, and database connectivity.                  | Functional | US05                      |
+**DTOs**
+
+- OrderCreatedDTO — Used to create new orders
+- OrderItemDTO — Represents products inside an order
+- OrderResponseDTO — Standardized order response model
+
+**Entities**
+
+- Customer
+- Product
+- Order
+- OrderItem
+
+**Repositories**
+
+Interfaces extending JpaRepository, auto-implemented by Spring:
+
+- CustomerRepository
+- ProductRepository
+- OrderRepository
+- OrderItemRepository
+
+**Services**
+
+Contains business rules and validations:
+- CustomerService
+- ProductService
+- OrderService
+
+
+## Main Endpoints (General Overview)
+| Resource  | Method | Endpoint       | Description       |
+| --------- | ------ | -------------- | ----------------- |
+| Customers | GET    | `/customers`   | List customers    |
+|           | POST   | `/customers`   | Create customer   |
+| Products  | GET    | `/products`    | List products     |
+|           | POST   | `/products`    | Add product       |
+| Orders    | POST   | `/orders`      | Create new order  |
+|           | GET    | `/orders/{id}` | Get order details |
+
+## Testing
+
+Unit tests are located in:
+```
+src/test/java/com.ordermanagement.orderapp
+```
+
 
 ## Tech Stack
 - **Springboot 3.6**
-- **Postgres  42.7**
+- **MySQL  8.0**
 - **Swagger**
 - **Postman (API Testing)**
 - **JUnit 4.13**
