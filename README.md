@@ -57,6 +57,10 @@ OrderManagement-challenge5/
 │   │   │               │   ├── OrderItem.java
 │   │   │               │   └── Product.java
 │   │   │               │
+│   │   │               ├── exception/
+│   │   │               │   ├──ErrorResponse
+│   │   │               │   └── GlobalExceptionHandler
+│   │   │               │
 │   │   │               ├── repository/
 │   │   │               │   ├── CustomerRepository.java
 │   │   │               │   ├── OrderItemRepository.java
@@ -71,7 +75,11 @@ OrderManagement-challenge5/
 │   │   │               └── OrderappApplication.java
 │   │   │
 │   │   └── resources/
-│   │       └── application.properties
+│   │       ├── application.yml
+│   │       ├── application-dev.yml
+│   │       ├── application-prod.yml
+│   │       ├── application-test.yml
+│   │       └── application.yml
 │   │
 │   └── test/
 │       └── java/
@@ -96,6 +104,7 @@ OrderManagement-challenge5/
 
 ```
 CREATE DATABASE online_store_dev;
+CREATE DATABASE online_store_prod;
 ```
 
 **2. Build and run**
