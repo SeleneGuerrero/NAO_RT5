@@ -1,87 +1,137 @@
 # Order Management System
 
-This project it is created using **Sprinboot** , **Swagger** for API documentation and **Postgres** designed to help to
-manage orders from the users.
+REST API built with Spring Boot, MySQL, and Spring Data JPA to manage customers, products, and orders in an online store.
+
 ---
+
+## Technologies Used
+
+**Backend**
+
+- Java 17
+- Spring Boot: spring-boot-starter, spring-boot-starter-web, spring-boot-starter-data-jpa
+
+**Database**
+
+- MySQL (mysql-connector-j:8.2.0)
+
+**Utilities**
+
+- Lombok
+- Jakarta Validation (Bean Validation API)
+
+**Testing**
+
+- Spring Boot Starter Test
+- JUnit
+
+---
+
 ## Project Structure
 
 ```
-order-management/
+OrderManagement-challenge5/
+│
+├── .idea/
+├── .mvn/
+│
 ├── src/
 │   ├── main/
-│   │   ├── java/com/digitalNAO/ordermanagement/orderapp
-│   │   │   ├── OrderappApplicacion.java
-│   │   │   ├── config/
-│   │   │   │   └── SwaggerConfig.java
-│   │   │   ├── entity/
-│   │   │   │   ├── Customer.java
-│   │   │   │   ├── Product.java
-│   │   │   │   ├── Order.java
-│   │   │   │   └── OrderItem.java
-│   │   │   ├── repository/
-│   │   │   │   ├── CustomerRepository.java
-│   │   │   │   ├── ProductRepository.java
-│   │   │   │   ├── OrderRepository.java
-│   │   │   │   └── OrderItemRepository.java
-│   │   │   ├── service/
-│   │   │   │   ├── CustomerService.java
-│   │   │   │   ├── ProductService.java
-│   │   │   │   └── OrderService.java
-│   │   │   ├── dto/
-│   │   │   │   ├── OrderCreateDTO.java
-│   │   │   │   ├── OrderResponseDTO.java
-│   │   │   │   └── OrderItemDTO.java
-│   │   │   └── controller/
-│   │   │       ├── CustomerController.java
-│   │   │       ├── ProductController.java
-│   │   │       └── OrderController.java
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── ordermanagement/
+│   │   │           └── orderapp/
+│   │   │               ├── controller/
+│   │   │               │   ├── CustomerController.java
+│   │   │               │   ├── OrderController.java
+│   │   │               │   └── ProductController.java
+│   │   │               │
+│   │   │               ├── dto/
+│   │   │               │   ├── OrderCreatedDTO.java
+│   │   │               │   ├── OrderItemDTO.java
+│   │   │               │   └── OrderResponseDTO.java
+│   │   │               │
+│   │   │               ├── entity/
+│   │   │               │   ├── Customer.java
+│   │   │               │   ├── Order.java
+│   │   │               │   ├── OrderItem.java
+│   │   │               │   └── Product.java
+│   │   │               │
+│   │   │               ├── repository/
+│   │   │               │   ├── CustomerRepository.java
+│   │   │               │   ├── OrderItemRepository.java
+│   │   │               │   ├── OrderRepository.java
+│   │   │               │   └── ProductRepository.java
+│   │   │               │
+│   │   │               ├── service/
+│   │   │               │   ├── CustomerService.java
+│   │   │               │   ├── OrderService.java
+│   │   │               │   └── ProductService.java
+│   │   │               │
+│   │   │               └── OrderappApplication.java
+│   │   │
+│   │   └── resources/
+│   │       └── application.properties
+│   │
 │   └── test/
-├── pom.xml
-└──  README.md
+│       └── java/
+│           └── com/
+│               └── ordermanagement/
+│                   └── orderapp/
+│                       └── OrderappApplicationTests.java
+│
+├── target/
+│
+├── mvnw
+├── mvnw.cmd
+├── .gitignore
+├── .gitattributes
+└── pom.xml
+
 ```
-## Features
-- API documentation in Swagger
-- Postgres with development and production database
-- Test
-
-## Instalation
-### Prerequisites
-- **Java SDK 17+**
-- **Postgres 42.7.7**
 ---
-## CRUD Endpoints
+## How to Run the Project
 
-| Method     | Endpoint         | Description     |
-|------------|------------------|-----------------|
-| **GET**    | `/api/users/`    | Get all users   |
-| **GET**    | `/api/users/:id` | Get users       |
-| **POST**   | `/api/users`     | Create new User |
-| **PUT**    | `/api/users/:id` | Update user     |
-| **DELETE** | `/api/users/:id` | Delete user     |         
-|            |                  |                 |
+**1. Create database in MySQL**
+
+```
+CREATE DATABASE online_store_dev;
+```
+
+**2. Build and run**
+```
+mvn clean install
+mvn spring-boot:run
+```
+---
+## API Endpoints (General Overview)
+
+**Customers**
+
+| Method | Endpoint          | Description        |
+| ------ | ----------------- | ------------------ |
+| GET    | `/customers`      | List all customers |
+| POST   | `/customers`      | Create customer    |
+| GET    | `/customers/{id}` | Get customer by ID |
+
+
+**Products**
+| Method | Endpoint    | Description    |
+| ------ | ----------- | -------------- |
+| GET    | `/products` | List products  |
+| POST   | `/products` | Create product |
+
+
+**Orders**
+| Method | Endpoint       | Description       |
+| ------ | -------------- | ----------------- |
+| POST   | `/orders`      | Create order      |
+| GET    | `/orders/{id}` | Get order details |
 
 ---
-## User Stories
-| **ID**   | **User Story**                                                                                                                                              | **Priority** | **Acceptance Criteria**                                                                                                                          |
-| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **US01** | As an **administrator**, I want to **configure different environments (dev, test, prod)** so that the system behaves correctly depending on the deployment. | High         | The system must support **Spring profiles** and load configurations dynamically for each environment.                                            |
-| **US02** | As a **developer**, I want to **document all API endpoints using Swagger** so that other teams can understand and test the services easily.                 | High         | Swagger UI must automatically generate documentation for each endpoint and allow visual testing through a browser interface.                     |
-| **US03** | As a **user**, I want to **place and track orders** so that I can verify the current status of my purchases.                                                | High         | The API must allow creating, reading, and updating orders in the PostgreSQL database and return real-time status information.                    |
-| **US04** | As a **system administrator**, I want to **monitor database connections and handle failures** so that service interruptions are minimized.                  | Medium       | The system must include error-handling logic for failed database nodes and provide meaningful error messages or fallback procedures.             |
-| **US05** | As a **project manager**, I want to **validate the integration and documentation of all services** so that the solution is stable and meets business needs. | Medium       | The application must successfully run integration tests using Swagger, Spring Boot, and the configured PostgreSQL database for all environments. |
-
-## Requirements and Deliverables
-| **ID**    | **Requirement Description**                                                                                                     | **Type**   | **Associated User Story** |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------ | :--------- | :------------------------ |
-| **REQ01** | Configure **Spring profiles** (`application-dev.yml`, `application-prod.yml`, etc.) for environment-based database connections. | Functional | US01, US04                |
-| **REQ02** | Integrate **Swagger/OpenAPI** to automatically generate REST API documentation.                                                 | Functional | US02, US05                |
-| **REQ03** | Implement **CRUD operations for orders** with PostgreSQL as the database.                                                       | Functional | US03                      |
-| **REQ04** | Implement **error handling and logging** for failed database nodes or connection issues.                                        | Functional | US04                      |
-| **REQ05** | Run **integration tests** to validate environment configuration, API documentation, and database connectivity.                  | Functional | US05                      |
-
 ## Tech Stack
 - **Springboot 3.6**
-- **Postgres  42.7**
+- **MySQL 8.0**
 - **Swagger**
 - **Postman (API Testing)**
 - **JUnit 4.13**
@@ -89,4 +139,4 @@ order-management/
 
 ## License
 
-MIT License © 2025 Luis Alberto García López
+MIT License © 2025 
